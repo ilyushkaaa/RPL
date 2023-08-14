@@ -1,0 +1,21 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+
+
+    <h1>Список футбольных команд</h1>
+     <div class="emblems">
+        {% for team in teams %}
+             <div class="emblem_item">
+                 <a href="{% url 'team_detail' team.id %}">
+                    <img src="{{ team.emblem_path }}" alt="{{ team.name }} logo" width="200" height="200">
+                 </a>
+            </div>
+        {% endfor %}
+     </div>
+
+
+{% endblock %}
+{% block title %}
+    Главная страница
+{% endblock %}

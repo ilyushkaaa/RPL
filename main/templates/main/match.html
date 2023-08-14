@@ -1,0 +1,64 @@
+
+{% extends 'main/layout.html' %}
+{% block content %}
+
+    <div class="record-container_small">
+    <div class="match_info">
+    <table class="table_result">
+        <tr>
+            <td> <img src="{{ match_info.0.5 }}" alt="{{ match_info.0.3 }} logo" width="300" height="300"></td>
+            <td>-</td>
+            <td><img src="{{ match_info.0.6 }}" alt="{{ match_info.0.4}} logo" width="300" height="300"></td>
+        </tr>
+        <tr class = match_team_names>
+            <td> <a href="{% url 'team_detail' match_info.0.0 %}">{{ match_info.0.3 }} </a> </td>
+            <td>-</td>
+            <td> <a href="{% url 'team_detail' match_info.0.1 %}">{{ match_info.0.4 }} </a> </td>
+        </tr>
+         <tr class = match_team_names>
+            <td> <a> {{ result.0.2 }}</a> </td>
+            <td>-</td>
+            <td> <a> {{ result.0.3 }}</a> </td>
+        </tr>
+
+    </table>
+        <table class = "table_result">
+            <tr>
+                <td>Судья: <a href="{% url 'referee_detail' match_info.0.7 %}">{{ match_info.0.10 }} {{ match_info.0.11 }} </a></td>
+        </tr>
+         <tr>
+                <td>Стадион: <a href="{% url 'show_stadium' match_info.0.8 %}">{{ match_info.0.9 }} </a></td>
+        </tr>
+        </table>
+
+    <br>
+
+
+    </div>
+    <div class="record-container">
+    <h4 style="text-align: center">Голы</h4>
+    {% for goal in goal_info %}
+        <div style="text-align: center">
+           {% if goal.5 == match_info.0.0 %}
+               <div class = "home_goal">
+                            <a href="{% url 'footballer_detail' goal.1 %}" > {{ goal.3 }} {{ goal.4 }} </a>&nbsp;  {{ goal.2 }}'
+                </div>
+
+              {% else %}
+                    <div class = "guest_goal">
+                        <a href="{% url 'footballer_detail' goal.1 %}" > {{ goal.3 }} {{ goal.4 }} </a>&nbsp;  {{ goal.2 }}'
+                    </div>
+
+
+           {% endif %}
+        </div>
+
+         <br>
+    {% endfor %}
+     </div>
+    <p></p>
+</div>
+{% endblock %}
+{% block title %}
+    {{ match_info.0.3 }} - {{ match_info.0.4 }}
+{% endblock %}

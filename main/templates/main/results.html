@@ -1,0 +1,30 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+
+     <h1>Сыгранные матчи</h1>
+    <table class = bombardirs>
+        <thead>
+            <tr>
+                <th>Матч</th>
+                <th>Счёт</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in results %}
+                <tr>
+                    <td> <a href="{% url 'match' res.4 %}">{{ res.0 }} - {{ res.1 }}</a></td>
+                    <td>{{ res.2 }} - {{ res.3 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+{% endblock %}
+{% block title %}
+    Результаты
+{% endblock %}

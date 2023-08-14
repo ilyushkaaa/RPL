@@ -1,0 +1,17 @@
+
+{% extends 'main/layout.html' %}
+{% block content %}
+    <div class="emblem_item">
+        <img src="{{ ref.photo_path }}" alt="{{ ref.surname }} logo" width="300" height="300">
+    <br>
+    <h1>{{ ref.surname }} {{ ref.name }} {{ ref.patronymic }}</h1>
+    <p class = "text_footballer">Дата рождения: {{ ref.birthday }}</p>
+    <p class = "text_footballer"> Город: {{ ref.city }}</p>
+    </div>
+
+    <!-- Добавьте остальные поля футболиста -->
+
+{% endblock %}
+{% block title %}
+{{ ref.name }} {{ ref.surname }}
+{% endblock %}

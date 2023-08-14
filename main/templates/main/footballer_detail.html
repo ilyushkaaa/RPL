@@ -1,0 +1,20 @@
+
+{% extends 'main/layout.html' %}
+{% block content %}
+    <div class="emblem_item">
+        <img src="{{ footballer.photo_path }}" alt="{{ footballer.surname }} logo" width="300" height="300">
+    <br>
+    <h1>{{ footballer.surname }} {{ footballer.name }} {{ footballer.patronymic }}</h1>
+    <p class = "text_footballer">Дата рождения: {{ footballer.birthday }}</p>
+    <p class = "text_footballer"> Команда: {% for team in footballer_team %}
+               {{ team.1 }} г.{{ team.2 }}
+            {% endfor %}</p>
+      <p class = "text_footballer">Позиция: {{ footballer.position }}</p>
+    </div>
+
+    <!-- Добавьте остальные поля футболиста -->
+
+{% endblock %}
+{% block title %}
+{{ footballer.name }} {{ footballer.surname }}
+{% endblock %}

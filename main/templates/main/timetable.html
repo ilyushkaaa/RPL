@@ -1,0 +1,27 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+    <h1>Календарь матчей</h1>
+    <table class = bombardirs>
+        <thead>
+            <tr>
+                <th>Матч</th>
+                <th>Дата</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for fut in future_matches %}
+                <tr>
+                    <td> {{ fut.0 }} - {{ fut.1}}</td>
+                    <td>{{ fut.2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% block title %}
+    Календарь
+{% endblock %}

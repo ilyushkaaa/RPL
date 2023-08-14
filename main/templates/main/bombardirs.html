@@ -1,0 +1,33 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+
+
+
+    <h1>Таблица бомбардиров</h1>
+    <table class="bombardirs">
+        <thead>
+            <tr>
+                <th>Игрок</th>
+                <th>Команда</th>
+                <th>Голы</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in bombardirs %}
+
+                <tr>
+                    <td><a href="{% url 'footballer_detail' player.4 %}">{{ player.1 }} {{ player.2 }}</a></td>
+                    <td><a href="{% url 'team_detail' player.5 %}">{{ player.0 }}</a></td>
+                    <td>{{ player.3 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
+{% block title %}
+    Бомбардиры
+{% endblock %}

@@ -1,0 +1,29 @@
+
+{% extends 'main/layout.html' %}
+{% block content %}
+    <div class = "emblem_item">
+    <h1>{{ team.name }}</h1>
+    <p>Город: {{ team.city }}</p>
+    <p>Домашний стадион: <a href="{% url 'show_stadium' team.stadium_id %}">{{ team.stadium.name }} </a></p>
+
+    <img src="{{ team.emblem_path }}" alt="{{ team.name }} logo" width="300">
+
+    <!-- Замените 'team_id' на реальное имя переменной с id команды в контексте шаблона -->
+    <br> <br> <br>
+<a id="customButton" current_team_id ="{{ team.id }}" href="#" class="button_player">
+    <button>Состав команды</button>
+</a>
+
+<script>
+    document.getElementById("customButton").addEventListener("click", function() {
+        var teamId = this.getAttribute("current_team_id");
+        var url = "/show_team_players/" + teamId + "/";
+        window.location.href = url;
+    });
+</script>
+
+</div>
+{% endblock %}
+{% block title %}
+    {{ team.name }}
+{% endblock %}

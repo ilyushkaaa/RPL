@@ -1,0 +1,17 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+     <div class="emblem_item">
+        <img src="{{ st.photo_path }}" alt="{{ st.name }} logo" width="450" height="300">
+    <br>
+    <h1>{{ st.name }} </h1>
+    <p class = "text_footballer">Город: {{ st.city }}</p>
+    <p class = "text_footballer"> Адрес: {{ st.address }}</p>
+      <p class = "text_footballer">Вместимость: {{ st.max_people }}</p>
+    </div>
+
+
+{% endblock %}
+{% block title %}
+    Стадион {{ st.name }}
+{% endblock %}

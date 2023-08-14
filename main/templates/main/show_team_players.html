@@ -1,0 +1,15 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+    <div class = "emblem_item">
+
+    <h1>Список игроков команды {{ team.name }}</h1>
+    {% for player in current_players %}
+        <a href="{% url 'footballer_detail' player.0 %}" class="footballer_names">{{ player.1 }} {{ player.2 }} {{ player.3 }} </a>
+        <br>
+    {% endfor %}
+    </div>
+{% endblock %}
+{% block title %}
+    Состав команды {{ team.name }}
+{% endblock %}

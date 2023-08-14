@@ -1,0 +1,26 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+
+
+
+
+    <h1>Судьи Российской Премьер - лиги</h1>
+     <div class="referees">
+        {% for ref in referee %}
+             <div class="emblem_item">
+                 <a href="{% url 'referee_detail' ref.id %}">
+                    <img src="{{ ref.photo_path }}" alt="{{ ref.name }} logo" width="200" height="200">
+                 </a>
+            </div>
+        {% endfor %}
+     </div>
+
+
+
+
+
+{% endblock %}
+{% block title %}
+    Судьи
+{% endblock %}

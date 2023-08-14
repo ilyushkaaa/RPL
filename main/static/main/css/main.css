@@ -1,0 +1,165 @@
+/*body{*/
+/*    background: deepskyblue;*/
+/*}*/
+.bombardirs {
+    border-collapse: collapse;
+    width: 80%;
+    font-family: Arial, sans-serif;
+
+}
+
+.bombardirs th,
+.bombardirs td {
+    border: 3px solid gray;
+    padding: 10px;
+    text-align: left;
+}
+
+.bombardirs th {
+    background-color: seagreen;
+}
+
+.tournament_table {
+    border-collapse: collapse;
+    width: 80%;
+    font-family: Arial, sans-serif;
+}
+
+.tournament_table th,
+.tournament_table td {
+    border: 3px solid gray;
+    padding: 10px;
+    text-align: left;
+}
+
+.tournament_table th {
+    background-color: seagreen;
+}
+.tournament_table tbody tr:nth-last-child(-n+2) {
+    background-color: red;
+    color: gray;
+}
+.tournament_table tbody tr:nth-last-child(3),
+.tournament_table tbody tr:nth-last-child(4) {
+    background-color: orange;
+    color: gray;
+}
+.tournament_table tbody tr:first-child {
+    background-color: greenyellow;
+    color: gray;
+}
+
+.emblems {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 столбца */
+    gap: 10px; /* Промежуток между элементами */
+}
+
+.emblem_item {
+    text-align: center;
+}
+
+.footballer_names {
+        text-decoration: none;
+        font-size: 40px;
+
+}
+
+.button_player {
+    width: 80px;
+    height: 40px;
+    padding: 10px 20px; /* Размер отступов вокруг текста внутри кнопки */
+    font-size: 25px; /* Размер шрифта */
+    background-color: #3498db; /* Цвет фона кнопки */
+    border: none; /* Убрать границу */
+    border-radius: 8px; /* Закругление углов кнопки */
+    cursor: pointer; /
+
+
+}
+
+.text_footballer {
+
+}
+
+.match_team_names {
+    font-size: 50px;
+    font-family: fantasy;
+    font-style: revert;
+    text-decoration: none;
+
+}
+
+.table_result{
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+.home_goal{
+    float: left;
+}
+.guest_goal{
+    float: right;
+}
+.score_container{
+   width: 100%;
+    margin-bottom: 20px;
+
+
+}
+
+ .record-container {
+ margin: 0 auto;
+     width: 800px;
+     min-height: 800px;
+     background: transparent;
+     border-radius: 15px;
+     font-size: 30px;
+
+
+ }
+
+ .record-container_small {
+ margin: 0 auto;
+     width: 800px;
+     min-height: 800px;
+     background: transparent;
+     border-radius: 15px;
+     font-size: 18px;
+
+
+ }
+
+ .logo{
+     font-size: 25px;
+ }
+body{
+    background: palegreen;
+}
+aside{
+    float: left;
+    background: seagreen;
+    width: 20%;
+    padding: 2.5%;
+    min-height: 2500px;
+    color: white;
+    border-right: 5px solid darkgreen;
+}
+
+.menu_items{
+    color: white;
+}
+
+
+.referees {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 столбца */
+    gap: 10px; /* Промежуток между элементами */
+}
+
+.stadiums {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 столбца */
+    gap: 10px; /* Промежуток между элементами */
+}

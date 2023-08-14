@@ -1,0 +1,26 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+
+
+
+
+    <h1>Стадионы Российской Премьер - лиги</h1>
+     <div class="stadiums">
+        {% for st in stadiums %}
+             <div class="emblem_item">
+                 <a href="{% url 'show_stadium' st.id %}">
+                    <img src="{{ st.photo_path }}" alt="{{ st.name }} logo" width="300" height="200">
+                 </a>
+            </div>
+        {% endfor %}
+     </div>
+
+
+
+
+
+{% endblock %}
+{% block title %}
+    Стадионы
+{% endblock %}
