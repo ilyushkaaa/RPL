@@ -70,6 +70,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'rpl.wsgi.application'
+LOGIN_REDIRECT_URL = 'my_template'
+
 
 
 # Database
@@ -78,9 +80,8 @@ WSGI_APPLICATION = 'rpl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
+        'NAME': 'postgres',
+
         'HOST': 'localhost',
         'PORT': '5432',
         'OPTIONS': {

@@ -7,7 +7,26 @@
     <h1>{{ ref.surname }} {{ ref.name }} {{ ref.patronymic }}</h1>
     <p class = "text_footballer">Дата рождения: {{ ref.birthday }}</p>
     <p class = "text_footballer"> Город: {{ ref.city }}</p>
+    <h3>Обслуженные матчи</h3>
     </div>
+
+     <table class = bombardirs>
+        <thead>
+            <tr>
+                <th>Матч</th>
+                <th>Счёт</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in results %}
+                <tr>
+                    <td> <a href="{% url 'match' res.4 %}">{{ res.0 }} - {{ res.1 }}</a></td>
+                    <td>{{ res.2 }} - {{ res.3 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <!-- Добавьте остальные поля футболиста -->
 

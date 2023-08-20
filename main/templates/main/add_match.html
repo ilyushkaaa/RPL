@@ -1,0 +1,40 @@
+{% extends 'main/admin_layout.html' %}
+{% block content %}
+    <h2>Добавить матч</h2>
+    <br>
+    <table>
+
+    <tr>
+        <td> <form method="post">
+
+
+            {% csrf_token %}
+             <a>ID</a><br>
+            {{ form.id }}<br>
+            <a>Домашняя команда</a><br>
+            {{ form.team_home }}<br>
+             <a>Гостевая команда</a><br>
+            {{ form.team_guest }}<br>
+             <a>Судья</a><br>
+            {{ form.referee }}<br>
+             <a>Дата</a><br>
+            {{ form.date }}<br>
+             <a>Матч окончен?</a><br>
+            {{ form.is_over }}<br>
+            <span>{{ error }}</span>
+
+            <button class = "btn btn-success" type="submit">Добавить</button>
+
+
+    </form>
+
+    </tr>
+    </table>
+
+
+
+
+{% endblock %}
+{% block title %}
+    Добавить матч
+{% endblock %}

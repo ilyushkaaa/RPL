@@ -32,7 +32,7 @@ class Referee(models.Model):
     photo_path = models.TextField(default='qwerty')
 
     def __str__(self):
-        return self.name + self.name
+        return self.name + ' ' + self.surname
 
     class Meta:
         managed = False
@@ -47,7 +47,7 @@ class Team(models.Model):
     emblem_path = models.TextField()
 
     def __str__(self):
-        return self.name + self.city
+        return self.name + ' ' + self.city
 
     class Meta:
         managed = False
@@ -65,7 +65,7 @@ class Footballer(models.Model):
     position = models.CharField(max_length=30, default='qwerty')
 
     def __str__(self):
-        return self.name + self.surname
+        return self.name + ' ' +  self.surname
 
     class Meta:
         managed = False

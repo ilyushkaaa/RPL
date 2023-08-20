@@ -1,0 +1,15 @@
+
+aside{
+    float: left;
+    background: white;
+    width: 20%;
+    padding: 2.5%;
+    min-height: 2500px;
+    color: black;
+    border-right: 5px solid gray;
+    font-size: 30px;
+}
+
+.forma{
+    background: gray;
+}

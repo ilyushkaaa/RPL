@@ -61,7 +61,11 @@
 
 .footballer_names {
         text-decoration: none;
-        font-size: 40px;
+    color: navy;
+
+        margin-left: 8px;
+        margin-top: 50px;
+        font-size: 30px;
 
 }
 

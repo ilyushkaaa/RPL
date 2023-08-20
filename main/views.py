@@ -7,6 +7,8 @@ from .models import Team
 from .models import Footballer
 from .models import Match
 from .models import Goal
+from django.shortcuts import render, redirect
+from .forms import MatchForm, GoalForm
 
 
 def index(request):
@@ -51,7 +53,7 @@ def show_stadium(request, stadium_id):
 
 def match(request, match_id):
     with connection.cursor() as cursor:
-        query = "select sel.id, sel.footballer_id, sel.minute, rpl.footballer.name, rpl.footballer.surname, rpl.footballer.team_id from (SELECT goal.id,goal.footballer_id,goal.minute FROM rpl.goal WHERE %s = goal.match_id) as sel join rpl.footballer on rpl.footballer.id = sel.footballer_id"
+        query = "select sel.id, sel.footballer_id, sel.minute, rpl.footballer.name, rpl.footballer.surname, rpl.footballer.team_id from (SELECT goal.id,goal.footballer_id,goal.minute FROM rpl.goal WHERE %s = goal.match_id) as sel join rpl.footballer on rpl.footballer.id = sel.footballer_id order by minute"
         cursor.execute(query, [match_id])
         goal_info = cursor.fetchall()
     with connection.cursor() as cursor1:
@@ -68,8 +70,12 @@ def match(request, match_id):
 
 
 def referee_detail(request, referee_id):
+    with connection.cursor() as cursor2:
+        query = "SELECT * from rpl.full_results_view where referee_id = %s order by date"
+        cursor2.execute(query, [referee_id])
+        results = cursor2.fetchall()
     ref = get_object_or_404(Referee, id=referee_id)
-    return render(request, 'main/referee_detail.html', {'ref': ref})
+    return render(request, 'main/referee_detail.html', {'ref': ref, 'results': results})
 
 
 def results(request):
@@ -110,5 +116,34 @@ def referee_all(request):
     referee = Referee.objects.all()
     return render(request, 'main/referee.html', {'referee': referee})
 
+
+def my_template_view(request):
+    return render(request, 'main/my_template.html')
+
+
+def add_match(request):
+    error = ''
+    if request.method == "POST":
+        form = MatchForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('222')
+        else:
+            error = "error"
+    form = MatchForm()
+
+    data = {
+        'form': form,
+        'error': error
+    }
+    return render(request, 'main/add_match.html', data)
+
+
+def add_goal(request):
+    return render(request, 'main/add_goal.html')
+
+
+def add_footballer(request):
+    return render(request, 'main/add_footballer.html')
 
 

@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
    path('', views.index, name='home'),
    path('main', views.index, name='main'),
@@ -15,5 +17,11 @@ urlpatterns = [
    path('table', views.table, name='table'),
    path('bombardirs', views.bombardirs, name='bombardirs'),
    path('stadiums', views.stadiums, name='stadiums'),
-   path('referee', views.referee_all, name='referee')
+   path('referee', views.referee_all, name='referee'),
+   path('login/', auth_views.LoginView.as_view(), name='login'),
+   path('my_template/', views.my_template_view, name='my_template'),
+   path('add_match/', views.add_match, name='add_match'),
+   path('add_footballer/', views.add_footballer, name='add_footballer'),
+   path('add_goal/', views.add_goal, name='add_goal'),
+
 ]

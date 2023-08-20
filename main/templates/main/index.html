@@ -1,10 +1,6 @@
 {% extends 'main/layout.html' %}
 {% block content %}
-
-
-
-    <h1>Список футбольных команд</h1>
-     <div class="emblems">
+    <div class="emblems">
         {% for team in teams %}
              <div class="emblem_item">
                  <a href="{% url 'team_detail' team.id %}">
