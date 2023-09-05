@@ -1,0 +1,26 @@
+{% extends 'main/admin_layout.html' %}
+{% block content %}
+
+      <h2>Выберите футболиста и действие</h2>
+     <table class = bombardirs>
+
+        <tbody>
+            {% for f in footballers %}
+                <tr>
+                    <td> <a>{{ f.name }} {{ f.surname }}</a></td>
+                    <td>     <a href="{% url 'change_footballer' f.id %}" class="btn btn-primary">Редактировать</a>
+                    </td>
+                <td> <a href="{% url 'delete_footballer' f.id %}" class="btn btn-primary">Удалить</a></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+{% endblock %}
+{% block title %}
+    Список футболистов
+{% endblock %}

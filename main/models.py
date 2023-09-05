@@ -2,6 +2,7 @@ import time
 from datetime import datetime
 
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -55,6 +56,13 @@ class Team(models.Model):
 
 
 class Footballer(models.Model):
+    STATUS_CHOICES = [
+        ('Защитник', 'Защитник'),
+        ('Вратарь', 'Вратарь'),
+        ('Нападающий', 'Нападающий'),
+        ('Полузащитник', 'Полузащитник')
+    ]
+
     id = models.BigIntegerField(primary_key=True)
     surname = models.CharField(max_length=30)
     name = models.CharField(max_length=30)
@@ -62,10 +70,13 @@ class Footballer(models.Model):
     birthday = models.DateField()
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     photo_path = models.TextField(default='qwerty')
-    position = models.CharField(max_length=30, default='qwerty')
+    position = models.CharField(max_length=30, default='qwerty', choices=STATUS_CHOICES)
 
     def __str__(self):
-        return self.name + ' ' +  self.surname
+        return self.name + ' ' + self.surname
+
+    def get_absolute_url(self):
+        return reverse('list_footballer')
 
     class Meta:
         managed = False
@@ -80,6 +91,11 @@ class Match(models.Model):
     date = models.DateField()
     is_over = models.BooleanField()
 
+    def get_absolute_url(self):
+        return reverse('list_match')
+
+
+
     def __str__(self):
         return str(self.team_home) + str(self.team_guest)
 
@@ -93,6 +109,9 @@ class Goal(models.Model):
     footballer = models.ForeignKey(Footballer, on_delete=models.CASCADE)
     minute = models.BigIntegerField()
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('list_goal')
 
     def __str__(self):
         return str(self.footballer) + str(self.match) + str(self.minute)

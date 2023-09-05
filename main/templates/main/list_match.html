@@ -1,0 +1,26 @@
+{% extends 'main/admin_layout.html' %}
+{% block content %}
+
+      <h2>Выберите матч и действие</h2>
+    <table class = bombardirs>
+
+        <tbody>
+            {% for f in matches %}
+                <tr>
+                    <td> <a>{{ f.0 }} {{ f.1 }}</a></td>
+                    <td> {{ f.2 }}</td>
+                    <td>     <a href="{% url 'change_match' f.3 %}" class="btn btn-primary">Редактировать</a>
+                    </td>
+                <td> <a href="{% url 'delete_match' f.3 %}" class="btn btn-primary">Удалить</a></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
+{% block title %}
+    Список матчей
+{% endblock %}

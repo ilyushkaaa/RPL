@@ -23,5 +23,14 @@ urlpatterns = [
    path('add_match/', views.add_match, name='add_match'),
    path('add_footballer/', views.add_footballer, name='add_footballer'),
    path('add_goal/', views.add_goal, name='add_goal'),
+   path('change_footballer/<int:pk>', views.UpdateFootballer.as_view(), name='change_footballer'),
+   path('change_goal/<int:pk>', views.UpdateGoal.as_view(), name='change_goal'),
+   path('change_match/<int:pk>', views.UpdateMatch.as_view(), name="change_match"),
+   path('delete_footballer/<int:pk>', views.DeleteFootballer.as_view(), name='delete_footballer'),
+   path('delete_goal/<int:pk>', views.DeleteGoal.as_view(), name='delete_goal'),
+   path('delete_match/<int:pk>', views.DeleteMatch.as_view(), name="delete_match"),
+   path('list_match/', views.change_match, name='list_match'),
+   path('list_goal/', views.change_goal, name='list_goal'),
+   path('list_footballer/', views.change_footballer, name='list_footballer')
 
 ]

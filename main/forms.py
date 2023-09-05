@@ -15,8 +15,7 @@ class MatchForm(forms.ModelForm):
                 'placeholder': 'ID'
             }),
             "date": DateInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'ID'
+                'type': 'date'
             }),
 
 
@@ -26,10 +25,23 @@ class MatchForm(forms.ModelForm):
 class GoalForm(forms.ModelForm):
     class Meta:
         model = Goal
-        fields = '__all__'
+        fields = ['id', 'footballer', 'minute', 'match']
 
 
 class FootballerForm(forms.ModelForm):
+    #position = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
     class Meta:
         model = Footballer
         fields = '__all__'
+        widgets = {
+            "id": NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'ID'
+            }),
+            "birthday": DateInput(attrs={
+                'type': 'date'
+
+            }),
+
+        }

@@ -1,6 +1,6 @@
 {% extends 'main/admin_layout.html' %}
 {% block content %}
-    <h2>Добавить матч</h2>
+    <h2>Вы действительно хотите удалить гол?</h2>
     <br>
     <table>
 
@@ -9,11 +9,8 @@
 
 
             {% csrf_token %}
-            {{ form.as_p }}<br>
 
-            <span>{{ error }}</span>
-
-            <button class = "btn btn-success" type="submit">Добавить</button>
+            <button class = "btn btn-success" type="submit">Удалить</button>
 
 
     </form>
@@ -23,8 +20,7 @@
 
 
 
-
 {% endblock %}
 {% block title %}
-    Добавить матч
+    Удалить футболиста
 {% endblock %}

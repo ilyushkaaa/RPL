@@ -8,7 +8,8 @@ from .models import Footballer
 from .models import Match
 from .models import Goal
 from django.shortcuts import render, redirect
-from .forms import MatchForm, GoalForm
+from .forms import MatchForm, GoalForm, FootballerForm
+from django.views.generic import UpdateView, DeleteView
 
 
 def index(request):
@@ -127,7 +128,7 @@ def add_match(request):
         form = MatchForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('222')
+
         else:
             error = "error"
     form = MatchForm()
@@ -140,10 +141,92 @@ def add_match(request):
 
 
 def add_goal(request):
-    return render(request, 'main/add_goal.html')
+    error = ''
+    if request.method == "POST":
+        form = GoalForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+        else:
+            error = "error"
+    form = GoalForm()
+
+    data = {
+        'form': form,
+        'error': error
+    }
+    return render(request, 'main/add_goal.html', data)
 
 
 def add_footballer(request):
-    return render(request, 'main/add_footballer.html')
+    error = ''
+    if request.method == "POST":
+        form = FootballerForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+        else:
+            error = "error"
+    form = FootballerForm()
+
+    data = {
+        'form': form,
+        'error': error
+    }
+    return render(request, 'main/add_footballer.html', data)
 
 
+def change_match(request):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "select t1.name, t2.name, date, rpl.match.id from rpl.match join rpl.team t1 on t1.id = rpl.match.team_home_id join rpl.team t2 on t2.id = rpl.match.team_guest_id order by date")
+        matches = cursor.fetchall()
+    return render(request, 'main/list_match.html', {'matches': matches})
+
+
+def change_footballer(request):
+    footballers = Footballer.objects.all()
+    return render(request, 'main/list_footballer.html', {'footballers': footballers})
+
+
+def change_goal(request):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "select t1.name, t2.name, rpl.footballer.name, rpl.footballer.surname, rpl.goal.minute, rpl.goal.id from rpl.goal join rpl.match on rpl.match.id = rpl.goal.match_id join rpl.team t1 on t1.id = rpl.match.team_home_id join rpl.team t2 on t2.id = rpl.match.team_guest_id join rpl.footballer on rpl.footballer.id = rpl.goal.footballer_id")
+        goals = cursor.fetchall()
+    return render(request, 'main/list_goal.html', {'goals': goals})
+
+
+class UpdateMatch(UpdateView):
+    model = Match
+    template_name = 'main/change_match.html'
+    fields = ['id', 'team_home', 'team_guest', 'referee', 'date', 'is_over']
+
+
+class UpdateFootballer(UpdateView):
+    model = Footballer
+    template_name = 'main/change_footballer.html'
+    fields = ['id', 'surname', 'name', 'patronymic', 'birthday', 'team', 'photo_path', 'position']
+
+
+class UpdateGoal(UpdateView):
+    model = Goal
+    template_name = 'main/change_goal.html'
+
+    fields = ['id', 'footballer', 'minute', 'match']
+
+
+class DeleteFootballer(DeleteView):
+    model = Footballer
+    template_name = 'main/delete_footballer.html'
+    success_url = ''
+
+
+class DeleteGoal(DeleteView):
+    model = Goal
+    template_name = 'main/delete_goal.html'
+
+
+class DeleteMatch(DeleteView):
+    model = Match
+    template_name = 'main/delete_match.html'

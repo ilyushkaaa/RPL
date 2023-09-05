@@ -1,0 +1,28 @@
+{% extends 'main/admin_layout.html' %}
+{% block content %}
+
+      <h2>Выберите гол и действие</h2>
+     <table class = bombardirs>
+
+        <tbody>
+            {% for f in goals %}
+                <tr>
+                    <td> <a>{{ f.0 }} {{ f.1 }}</a></td>
+                    <td> {{ f.2 }}</td>
+                     <td> {{ f.3 }}</td>
+                     <td> {{ f.4 }}'</td>
+                    <td>     <a href="{% url 'change_goal' f.5 %}" class="btn btn-primary">Редактировать</a>
+                    </td>
+                <td> <a href="{% url 'delete_goal' f.5 %}" class="btn btn-primary">Удалить</a></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
+{% block title %}
+    Список голов
+{% endblock %}
