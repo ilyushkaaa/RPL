@@ -80,9 +80,7 @@ LOGIN_REDIRECT_URL = 'my_template'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'ilya',
+        
         'HOST': 'localhost',
         'PORT': '5432',
         'OPTIONS': {
