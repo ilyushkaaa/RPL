@@ -5,7 +5,7 @@
         <img src="{{ ref.photo_path }}" alt="{{ ref.surname }} logo" width="300" height="300">
     <br>
     <h1>{{ ref.surname }} {{ ref.name }} {{ ref.patronymic }}</h1>
-    <p class = "text_footballer">Дата рождения: {{ ref.birthday }}</p>
+    <p class = "text_footballer">Дата рождения: {{ ref.birthday|date:"d.m.Y" }}</p>
     <p class = "text_footballer"> Город: {{ ref.city }}</p>
     <h3>Обслуженные матчи</h3>
     </div>
@@ -28,7 +28,6 @@
         </tbody>
     </table>
 
-    <!-- Добавьте остальные поля футболиста -->
 
 {% endblock %}
 {% block title %}

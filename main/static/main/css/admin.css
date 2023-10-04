@@ -13,3 +13,18 @@ aside{
 .forma{
     background: gray;
 }
+
+
+.button-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px; /* Добавьте отступ между группами кнопок, если необходимо */
+}
+
+.button-container a {
+  display: block;
+  width: 100%;
+  box-sizing: border-box; /* Учтите padding и border внутри кнопки в ширине 100% */
+  text-align: center;
+  margin-bottom: 5px; /* Добавьте отступы между кнопками, если необходимо */
+}

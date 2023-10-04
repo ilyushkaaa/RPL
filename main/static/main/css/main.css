@@ -8,11 +8,20 @@
 
 }
 
+.search {
+    border-collapse: collapse;
+    width: 80%;
+    font-family: Arial, sans-serif;
+}
+
 .bombardirs th,
 .bombardirs td {
-    border: 3px solid gray;
     padding: 10px;
     text-align: left;
+}
+
+.bombardirs tr {
+    border-bottom: 3px solid #ccc
 }
 
 .bombardirs th {
@@ -35,15 +44,18 @@
 .tournament_table th {
     background-color: seagreen;
 }
+
 .tournament_table tbody tr:nth-last-child(-n+2) {
     background-color: red;
     color: gray;
 }
+
 .tournament_table tbody tr:nth-last-child(3),
 .tournament_table tbody tr:nth-last-child(4) {
     background-color: orange;
     color: gray;
 }
+
 .tournament_table tbody tr:first-child {
     background-color: greenyellow;
     color: gray;
@@ -59,13 +71,18 @@
     text-align: center;
 }
 
+.goal_authors {
+    text-align: center;
+    font-size: 30px;
+}
+
 .footballer_names {
-        text-decoration: none;
+    text-decoration: none;
     color: navy;
 
-        margin-left: 8px;
-        margin-top: 50px;
-        font-size: 30px;
+    margin-left: 8px;
+    margin-top: 50px;
+    font-size: 30px;
 
 }
 
@@ -77,7 +94,8 @@
     background-color: #3498db; /* Цвет фона кнопки */
     border: none; /* Убрать границу */
     border-radius: 8px; /* Закругление углов кнопки */
-    cursor: pointer; /
+    cursor: pointer;
+/
 
 
 }
@@ -94,54 +112,59 @@
 
 }
 
-.table_result{
+.table_result {
     text-align: center;
     margin: 0 auto;
 }
 
 
-.home_goal{
+.home_goal {
     float: left;
 }
-.guest_goal{
+
+.guest_goal {
     float: right;
 }
-.score_container{
-   width: 100%;
+
+.score_container {
+    width: 100%;
     margin-bottom: 20px;
 
 
 }
 
- .record-container {
- margin: 0 auto;
-     width: 800px;
-     min-height: 800px;
-     background: transparent;
-     border-radius: 15px;
-     font-size: 30px;
+.record-container {
+    margin: 0 auto;
+    width: 800px;
+    min-height: 800px;
+    background: transparent;
+    border-radius: 15px;
+    font-size: 30px;
+    align-content: end;
+
+}
+
+.record-container_small {
+    margin: 0 auto;
+    width: 800px;
+    min-height: 800px;
+    background: transparent;
+    border-radius: 15px;
+    font-size: 18px;
+    text-align: center;
 
 
- }
+}
 
- .record-container_small {
- margin: 0 auto;
-     width: 800px;
-     min-height: 800px;
-     background: transparent;
-     border-radius: 15px;
-     font-size: 18px;
+.logo {
+    font-size: 25px;
+}
 
-
- }
-
- .logo{
-     font-size: 25px;
- }
-body{
+body {
     background: palegreen;
 }
-aside{
+
+aside {
     float: left;
     background: seagreen;
     width: 20%;
@@ -151,7 +174,7 @@ aside{
     border-right: 5px solid darkgreen;
 }
 
-.menu_items{
+.menu_items {
     color: white;
 }
 
@@ -167,3 +190,171 @@ aside{
     grid-template-columns: repeat(4, 1fr); /* 4 столбца */
     gap: 10px; /* Промежуток между элементами */
 }
+
+
+.table-cell {
+    text-align: right;
+    margin-left: 100px /* Выравнивание текста по правому краю */
+}
+
+
+.custom-search-input {
+    flex: 1;
+    border: none;
+    padding: 5px;
+}
+
+.custom-search-button {
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+.custom-search-form {
+    display: flex;
+    justify-content: flex-end; /* Выравнивание контейнера формы по правому краю */
+
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.transparent-button {
+    background-color: transparent; /* Прозрачный фон */
+    color: black; /* Черный текст */
+    border: none; /* Убрать границу кнопки */
+    cursor: pointer; /* Изменение курсора при наведении */
+}
+
+/* Стили для разделения экрана на две части */
+.container {
+    display: flex;
+}
+
+.left {
+    flex: 3; /* Левая часть занимает 1/2 ширины экрана */
+}
+
+.middle {
+    flex: 4; /* Правая часть занимает 1/2 ширины экрана */
+}
+
+
+.right {
+    flex: 3; /* Правая часть занимает 1/2 ширины экрана */
+}
+
+.button-cell {
+    text-align: right; /* Выравниваем содержимое ячейки по правому краю */
+}
+
+/* Стилизация кнопки */
+.btn {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.image-container {
+    position: relative;
+}
+
+.link-area {
+    position: absolute;
+}
+
+
+area {
+    outline: 2px solid red; /* Обводка красным цветом */
+    background-color: rgba(255, 0, 0, 0.2); /* Заливка красным с неполной прозрачностью */
+}
+
+/* Скрыть модальное окно по умолчанию */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%; /* Смещение верхнего края на 50% высоты экрана */
+    left: 50%; /* Смещение левого края на 50% ширины экрана */
+    transform: translate(-50%, -50%); /* Центрирование по горизонтали и вертикали */
+    width: 60%; /* Ширина модального окна */
+    height: 60%; /* Высота модального окна */
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Кнопка закрытия */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 40px;
+}
+
+#modalText {
+    font-size: 25px; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+    font-weight: bold; /* Жирный шрифт */
+    text-align: center; /* Выравнивание текста по центру */
+    /* Другие свойства стиля, которые вам нужны */
+}
+
+.modal-scrollable-content {
+    max-height: 70vh; /* Максимальная высота контейнера (например, 70% высоты экрана) */
+    overflow-y: auto; /* Разрешить вертикальную прокрутку при необходимости */
+}
+.matrix {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.place {
+    width: 30px; /* Ширина места */
+    height: 30px; /* Высота места */
+    background-color: #939190  ; /* Цвет места */
+    margin: 2px; /* Отступ между местами */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.selected-place {
+    background-color: #00FF00;
+}
+
+.default-place {
+    background-color: #939190  ;
+}
+

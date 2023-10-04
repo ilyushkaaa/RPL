@@ -1,0 +1,87 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block content %}
+
+
+    <div class="emblem_item">
+        <h1>Покупка билетов</h1>
+        <table class="table_result">
+            <tr>
+                <td><img src="{{ match_info.0.6 }}" alt="{{ match_info.0.3 }} logo" width="300" height="300"></td>
+                <td>-</td>
+                <td><img src="{{ match_info.0.10 }}" alt="{{ match_info.0.7 }} logo" width="300" height="300"></td>
+            </tr>
+            <tr class=match_team_names>
+                <td><a href="{% url 'team_detail' match_info.0.4 %}">{{ match_info.0.3 }} </a></td>
+                <td>-</td>
+                <td><a href="{% url 'team_detail' match_info.0.8 %}">{{ match_info.0.7 }} </a></td>
+            </tr>
+
+        </table>
+        <table class="table_result">
+            <tr>
+                <td>Судья: <a
+                        href="{% url 'referee_detail' match_info.0.11 %}">{{ match_info.0.12 }} {{ match_info.0.13 }} </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Стадион: <a href="{% url 'show_stadium' match_info.0.1 %}">{{ match_info.0.2 }} </a></td>
+            </tr>
+        </table>
+
+        <br>
+
+
+    </div>
+
+
+
+
+    <div class="emblem_item"><img src="{% static 'main/img/Metallurg_stadium_plan.png' %}" alt="logo" height="500"
+                                  width="800"
+                                  usemap="#image-map">
+
+        <map name="image-map">
+            <area shape="rect" coords="189,40, 242, 126" href="#" class="open-modal" data-text="1">
+            <area shape="rect" coords="242,40, 295, 126" href="#" class="open-modal" data-text="2">
+            <area shape="rect" coords="293,40, 350, 126" href="#" class="open-modal" data-text="3">
+            <area shape="rect" coords="350,40, 465, 126" href="#" class="open-modal" data-text="4">
+            <area shape="rect" coords="465,40, 518, 126" href="#" class="open-modal" data-text="5">
+            <area shape="rect" coords="518,40, 571, 126" href="#" class="open-modal" data-text="6">
+            <area shape="rect" coords="571,40, 627, 126" href="#" class="open-modal" data-text="7">
+            <area shape="rect" coords="627,126,  740, 168" href="#" class="open-modal" data-text="8">
+            <area shape="rect" coords="627,168, 740, 210" href="#" class="open-modal" data-text="9">
+            <area shape="rect" coords="627,210, 740, 257" href="#" class="open-modal" data-text="10">
+            <area shape="rect" coords="627,257, 740, 300" href="#" class="open-modal" data-text="11">
+            <area shape="rect" coords="627,300, 740, 343" href="#" class="open-modal" data-text="12">
+            <area shape="rect" coords="591,348, 627, 435" href="#" class="open-modal" data-text="13">
+            <area shape="rect" coords="520,348, 591, 435" href="#" class="open-modal" data-text="14">
+            <area shape="rect" coords="445,348, 520, 435" href="#" class="open-modal" data-text="15">
+            <area shape="rect" coords="370,348, 445, 435" href="#" class="open-modal" data-text="16">
+            <area shape="rect" coords="300,348, 370, 435" href="#" class="open-modal" data-text="17">
+            <area shape="rect" coords="225,348, 300, 435" href="#" class="open-modal" data-text="18">
+            <area shape="rect" coords="185,348, 225, 435" href="#" class="open-modal" data-text="19">
+
+
+        </map>
+
+
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <input type="hidden" id="matchId" data-match-id="{{ match_info.0.0 }}">
+            <span class="close" id="close-modal">&times;</span>
+            <p id="modalText"></p>
+            <div class="modal-scrollable-content">
+                <div id="placesMatrix"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+{% block title %}
+    Покупка билетов
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+
+
+    <div class="container">
+        <div class="left">
+            <img src="{{ team.0.4 }}" alt="{{ team.0.1 }} logo" width="250" height="300">
+            <br>
+            <h2><a href="{% url 'team_detail' team.0.0 %}"> {{ team.0.1 }} {{ team.0.2 }}</a></h2>
+        </div>
+        <div class="middle">
+            <h3>Календарь</h3>
+            <table class=bombardirs>
+                <thead>
+                <tr>
+                    <th>Матч</th>
+                    <th>Дата</th>
+                    <th>Купить билет</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for fut in future_matches %}
+                    <tr>
+                        <td> {{ fut.0 }} - {{ fut.1 }}</td>
+                        <td>{{ fut.2|date:"d.m.Y" }}</td>
+                        <td class="button-cell">
+                            <a href="{% url 'buy_tickets' fut.3 %}" class="btn btn-primary">Купить билет</a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="right">
+            <h3>Результаты матчей</h3>
+            <table class=bombardirs>
+                <thead>
+                <tr>
+                    <th>Матч</th>
+                    <th>Дата</th>
+                    <th>Счёт</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for res in results %}
+                    <tr>
+                        <td><a href="{% url 'match' res.4 %}">{{ res.0 }} - {{ res.1 }}</a></td>
+                        <td>{{ res.5|date:"d.m.Y" }}</td>
+                        <td>{{ res.2 }} - {{ res.3 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <br> <br>
+
+    <br>
+
+
+
+{% endblock %}
+{% block title %}
+    Моя команда
+{% endblock %}

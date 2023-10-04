@@ -15,6 +15,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+AUTH_USER_MODEL = 'main.Fan'  # Замените 'myapp' на имя вашего приложения
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 MIDDLEWARE = [
@@ -64,8 +68,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.user_info'
             ],
         },
+
     },
 ]
 
@@ -80,7 +86,9 @@ LOGIN_REDIRECT_URL = 'my_template'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'ilya',
         'HOST': 'localhost',
         'PORT': '5432',
         'OPTIONS': {
@@ -128,7 +136,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'main.authentication.CustomAuthBackend',
+
+]

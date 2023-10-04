@@ -4,7 +4,20 @@
 
 
 
-    <h1>Таблица бомбардиров</h1>
+     <table class = search>
+    <tr>
+        <td>
+             <h1>Таблица бомбардиров</h1>
+        </td>
+        <td class="table-cell" >
+            <form class="custom-search-form" role="search" method="get" action="{% url 'bombardirs' %}">
+                <input class="custom-search-input" type="search" name="search" placeholder="Поиск по команде или игроку" aria-label="Search">
+                <button class="custom-search-button" type="submit"> <img src="https://w7.pngwing.com/pngs/403/322/png-transparent-computer-icons-search-box-button-button-desktop-wallpaper-search-box-magnifying-glass.png" alt="Поиск" width="30" height="30"></button>
+
+            </form>
+
+        </td>
+    </tr>
     <table class="bombardirs">
         <thead>
             <tr>

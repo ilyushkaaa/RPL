@@ -2,11 +2,29 @@
 {% block content %}
 
 
-     <h1>Сыгранные матчи</h1>
+    <table class = search>
+    <tr>
+        <td>
+             <h1>Сыгранные матчи</h1>
+        </td>
+        <td class="table-cell" >
+            <form class="custom-search-form" role="search" method="get" action="{% url 'results' %}">
+                <input class="custom-search-input" type="search" name="search" placeholder="Поиск по команде" aria-label="Search">
+                <button class="custom-search-button" type="submit"> <img src="https://w7.pngwing.com/pngs/403/322/png-transparent-computer-icons-search-box-button-button-desktop-wallpaper-search-box-magnifying-glass.png" alt="Поиск" width="30" height="30"></button>
+
+            </form>
+
+        </td>
+    </tr>
+
+
+    </table>
+
     <table class = bombardirs>
         <thead>
             <tr>
                 <th>Матч</th>
+                <th>Дата</th>
                 <th>Счёт</th>
 
             </tr>
@@ -15,6 +33,7 @@
             {% for res in results %}
                 <tr>
                     <td> <a href="{% url 'match' res.4 %}">{{ res.0 }} - {{ res.1 }}</a></td>
+                    <td>{{ res.5|date:"d.m.Y"}}</td>
                     <td>{{ res.2 }} - {{ res.3 }}</td>
                 </tr>
             {% endfor %}

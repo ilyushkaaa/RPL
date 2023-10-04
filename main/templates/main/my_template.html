@@ -1,23 +1,6 @@
 {% extends 'main/admin_layout.html' %}
 {% block content %}
 
-    <ul>
-        <a href="{% url 'add_match' %}"><li><button class = "btn btn-info"><i class = "fas fa-plus-circle"></i>Добавить матч</button></li> </a>
-        <a href="{% url 'add_goal' %}"> <li><button class = "btn btn-info"><i class = "fas fa-plus-circle"></i>Добавить гол</button></li></a>
-        <a href="{% url 'add_footballer' %}"> <li><button class = "btn btn-info"><i class = "fas fa-plus-circle"></i>Добавить футболиста</button></li></a>
-
-
-        <a href="{% url 'list_match' %}"> <li><button class = "btn btn-info"><i class = "fas fa-plus-circle"></i>Отредактировать/удалить матч</button></li></a>
-
-         <a href="{% url 'list_goal' %}"><li><button class = "btn btn-info"><i class = "fas fa-plus-circle"></i>Отредактировать/удалить гол</button></li></a>
-         <a href="{% url 'list_footballer' %}"><li><button class = "btn btn-info"><i class = "fas fa-plus-circle"></i>Отредактировать/удалить футболиста</button></li></a>
-
-
-
-
-
-
-    </ul>
 
 
 {% endblock %}
