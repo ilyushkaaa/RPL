@@ -1,6 +1,7 @@
 import hashlib
-
+import json
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.sessions.models import Session
@@ -20,6 +21,10 @@ from django.shortcuts import render, redirect
 from .forms import MatchForm, GoalForm, FootballerForm, FanRegistrationForm, FanLoginForm, UpdateProfileForm
 from django.views.generic import UpdateView, DeleteView
 from django.contrib.auth.hashers import make_password
+
+
+def is_superuser(user):
+    return user.is_superuser
 
 
 def index(request):
@@ -156,10 +161,12 @@ def referee_all(request):
     return render(request, 'main/referee.html', {'referee': referee})
 
 
+@user_passes_test(is_superuser)
 def my_template_view(request):
     return render(request, 'main/my_template.html')
 
 
+@user_passes_test(is_superuser)
 def add_match(request):
     error = ''
     if request.method == "POST":
@@ -178,6 +185,7 @@ def add_match(request):
     return render(request, 'main/add_match.html', data)
 
 
+@user_passes_test(is_superuser)
 def add_goal(request):
     error = ''
     if request.method == "POST":
@@ -196,6 +204,7 @@ def add_goal(request):
     return render(request, 'main/add_goal.html', data)
 
 
+@user_passes_test(is_superuser)
 def add_footballer(request):
     error = ''
     if request.method == "POST":
@@ -214,6 +223,7 @@ def add_footballer(request):
     return render(request, 'main/add_footballer.html', data)
 
 
+@user_passes_test(is_superuser)
 def change_match(request):
     with connection.cursor() as cursor:
         cursor.execute(
@@ -222,11 +232,13 @@ def change_match(request):
     return render(request, 'main/list_match.html', {'matches': matches})
 
 
+@user_passes_test(is_superuser)
 def change_footballer(request):
     footballers = Footballer.objects.all()
     return render(request, 'main/list_footballer.html', {'footballers': footballers})
 
 
+@user_passes_test(is_superuser)
 def change_goal(request):
     with connection.cursor() as cursor:
         cursor.execute(
@@ -321,6 +333,7 @@ def success_registration(request):
     return render(request, 'main/success_registration.html')
 
 
+@login_required
 def logoutMe(request):
     logout(request)
     return redirect('success_logout')
@@ -340,26 +353,29 @@ class UpdateProfile(UpdateView):
     form_class = UpdateProfileForm
 
 
+@login_required
 def favourite_team(request, email):
-    with connection.cursor() as cursor2:
-        query = "select t1.name,t2.name, sel.date, sel.id from (select * from rpl.match where is_over = false) as sel join rpl.team t1 on t1.id = sel.team_home_id join rpl.team t2 on t2.id = sel.team_guest_id where t1.id in (select favourite_team_id from rpl.fan where email = %s) or t2.id in (select favourite_team_id from rpl.fan where email = %s)"
-        cursor2.execute(query, (email, email))
-        future_matches = cursor2.fetchall()
+    if request.user.email == email:
+        with connection.cursor() as cursor2:
+            query = "select t1.name,t2.name, sel.date, sel.id from (select * from rpl.match where is_over = false) as sel join rpl.team t1 on t1.id = sel.team_home_id join rpl.team t2 on t2.id = sel.team_guest_id where t1.id in (select favourite_team_id from rpl.fan where email = %s) or t2.id in (select favourite_team_id from rpl.fan where email = %s)"
+            cursor2.execute(query, (email, email))
+            future_matches = cursor2.fetchall()
 
-    with connection.cursor() as cursor3:
-        query = "SELECT * from rpl.full_results_view where Idh in (select favourite_team_id from rpl.fan where email = %s) or Idg in (select favourite_team_id from rpl.fan where email = %s)"
-        cursor3.execute(query, (email, email))
-        results = cursor3.fetchall()
+        with connection.cursor() as cursor3:
+            query = "SELECT * from rpl.full_results_view where Idh in (select favourite_team_id from rpl.fan where email = %s) or Idg in (select favourite_team_id from rpl.fan where email = %s)"
+            cursor3.execute(query, (email, email))
+            results = cursor3.fetchall()
 
-    with connection.cursor() as cursor4:
-        query = "select * from rpl.team where id in (select favourite_team_id from rpl.fan where email = %s)"
-        cursor4.execute(query, [email])
-        team = cursor4.fetchall()
+        with connection.cursor() as cursor4:
+            query = "select * from rpl.team where id in (select favourite_team_id from rpl.fan where email = %s)"
+            cursor4.execute(query, [email])
+            team = cursor4.fetchall()
 
-    return render(request, 'main/favourite_team.html',
-                  {'future_matches': future_matches, 'results': results, 'team': team})
+        return render(request, 'main/favourite_team.html',
+                      {'future_matches': future_matches, 'results': results, 'team': team})
 
 
+@login_required
 def buy_tickets(request, id):
     with connection.cursor() as cursor3:
         query = "select sel.id, st.id, st.name, t1.name, t1.id, t1.city, t1.emblem_path, t2.name, t2.id, t2.city, t2.emblem_path,ref.id, ref.name, ref.surname from (select* from rpl.match where is_over = false and id = '%s') as sel join rpl.team t1 on t1.id = sel.team_home_id join rpl.team t2 on t2.id = sel.team_guest_id join rpl.referee ref on ref.id = sel.referee_id join rpl.stadium st on st.id = t1.stadium_id"
@@ -368,11 +384,35 @@ def buy_tickets(request, id):
     return render(request, 'main/buy_tickets.html', {'match_info': match_info})
 
 
+@login_required
 def get_places(request):
     sector_id = request.GET.get('sector_num')
     match_id = request.GET.get('match_id')
 
     places = Ticket.objects.filter(sector=sector_id, match_id=match_id)
-    places_data = [{'row': currentPlace.row, 'place': currentPlace.place} for currentPlace in places]
+    places_data = [{'row': currentPlace.row, 'place': currentPlace.place, 'placeId': currentPlace.id} for currentPlace
+                   in places]
 
     return JsonResponse({'places': places_data})
+
+
+def check_authentication(request):
+    authenticated = request.user.is_authenticated
+    return JsonResponse({'authenticated': authenticated})
+
+
+def process_selected_places(request):
+    if request.method == 'POST':
+        # Получаем данные из запроса в формате JSON
+        try:
+            data = json.loads(request.body)
+
+            print("good")
+
+        except json.JSONDecodeError:
+            print("error")
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+
+        return JsonResponse({'message': 'Data received successfully'})
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)

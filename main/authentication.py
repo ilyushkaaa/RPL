@@ -12,8 +12,6 @@ class CustomAuthBackend(ModelBackend):
             user = Fan.objects.get(email=email)
             if user.check_password(password):
                 return user
-            else:
-                print("noooooooo")
         except Fan.DoesNotExist:
             return None
 

@@ -19,7 +19,26 @@
     </style>
 </head>
 <body>
+
 <aside>
+
+    {% if user.is_authenticated %}
+        <div id="cart-icon" class="right-image">
+
+            <span id="cart-count">0</span>
+        </div>
+        <ul>
+            <li>
+                <img src="{% static 'main/img/basket.png' %}" alt="Корзина" width=40px height=40px class="right-image">
+
+            </li>
+
+        </ul>
+
+
+    {% endif %}
+
+
     <img src="{% static 'main/img/rpl-logo.png' %}" alt="logo" height="250" width="250">
     <br>
     <span class="logo"></span>
@@ -35,8 +54,9 @@
     {% endif %}
 
     <br>
-    <h3>Меню</h3>
+
     <ul>
+        <h3>Меню</h3>
         <a class="menu_items" href="{% url 'main' %}">
             <li>Главная</li>
         </a>

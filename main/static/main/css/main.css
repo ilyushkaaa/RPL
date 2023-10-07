@@ -358,3 +358,14 @@ area {
     background-color: #939190  ;
 }
 
+
+
+
+.right-image {
+    color: black;
+    float: right; /* Размещение картинки справа */
+}
+
+ul, ol {
+  list-style-type: none;
+}

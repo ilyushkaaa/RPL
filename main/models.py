@@ -189,8 +189,6 @@ class Fan(AbstractBaseUser, PermissionsMixin):
 
         # Получите SHA-256 хэш в виде шестнадцатеричной строки
         hash_password = sha256_hash.hexdigest()
-        print(hash_password)
-
         # Реализация проверки совпадения паролей
         return hash_password == self.password  # П
 

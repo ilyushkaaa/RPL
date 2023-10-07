@@ -42,5 +42,7 @@ urlpatterns = [
     path('favourite_team/<str:email>', views.favourite_team, name='favourite_team'),
     path('buy_tickets/<int:id>', views.buy_tickets, name='buy_tickets'),
     path('get_places/', views.get_places, name='get_places'),
+    path('check_authentication/', views.check_authentication, name='check_authentication'),
+    path('process_selected_places/', views.process_selected_places, name='process_selected_places'),
 
 ]
