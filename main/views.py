@@ -1,5 +1,8 @@
+import datetime
 import hashlib
 import json
+import random
+
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -375,10 +378,11 @@ def favourite_team(request, email):
                       {'future_matches': future_matches, 'results': results, 'team': team})
 
 
-@login_required
 def buy_tickets(request, id):
+    current_time = datetime.datetime.now().time()
+
     with connection.cursor() as cursor3:
-        query = "select sel.id, st.id, st.name, t1.name, t1.id, t1.city, t1.emblem_path, t2.name, t2.id, t2.city, t2.emblem_path,ref.id, ref.name, ref.surname from (select* from rpl.match where is_over = false and id = '%s') as sel join rpl.team t1 on t1.id = sel.team_home_id join rpl.team t2 on t2.id = sel.team_guest_id join rpl.referee ref on ref.id = sel.referee_id join rpl.stadium st on st.id = t1.stadium_id"
+        query = "select sel.id, st.id, st.name, t1.name, t1.id, t1.city, t1.emblem_path, t2.name, t2.id, t2.city, t2.emblem_path,ref.id, ref.name, ref.surname, sel.date from (select* from rpl.match where is_over = false and id = '%s') as sel join rpl.team t1 on t1.id = sel.team_home_id join rpl.team t2 on t2.id = sel.team_guest_id join rpl.referee ref on ref.id = sel.referee_id join rpl.stadium st on st.id = t1.stadium_id"
         cursor3.execute(query, [id])
         match_info = cursor3.fetchall()
     return render(request, 'main/buy_tickets.html', {'match_info': match_info})
@@ -389,8 +393,13 @@ def get_places(request):
     sector_id = request.GET.get('sector_num')
     match_id = request.GET.get('match_id')
 
-    places = Ticket.objects.filter(sector=sector_id, match_id=match_id)
-    places_data = [{'row': currentPlace.row, 'place': currentPlace.place, 'placeId': currentPlace.id} for currentPlace
+    with connection.cursor() as cursor3:
+        query = "select rpl.ticket.id, rpl.ticket.row, rpl.ticket.place,case when rpl.ticket_sales.is_in_basket = false then true else false end as place_not_available from rpl.ticket left join rpl.ticket_sales on rpl.ticket.id = rpl.ticket_sales.ticket_id where match_id = %s and sector = %s"
+        cursor3.execute(query, [match_id, sector_id])
+        places = cursor3.fetchall()
+
+    places_data = [{'row': currentPlace[1], 'place': currentPlace[2], 'placeId': currentPlace[0],
+                    'is_not_available': currentPlace[3]} for currentPlace
                    in places]
 
     return JsonResponse({'places': places_data})
@@ -405,14 +414,69 @@ def process_selected_places(request):
     if request.method == 'POST':
         # Получаем данные из запроса в формате JSON
         try:
-            data = json.loads(request.body)
+            with connection.cursor() as cursor:
+                data = json.loads(request.body)
+                placesIds = data.get('placeIds', [])
 
-            print("good")
+                print(placesIds)
+
+                user_email = request.user.email
+
+                for currentId in placesIds:
+                    while True:
+                        newId = random.randint(1, 2 ** 31 - 1)
+                        if not TicketSales.objects.filter(id=newId).exists():
+                            obj = TicketSales(id=newId,
+                                              ticket_id=currentId,
+                                              fan_id=user_email,
+                                              is_in_basket=True)
+                            obj.save()
+                            break
+                query = "select t1.name, t2.name, ticket.id, sector, row, place from rpl.ticket join rpl.match on rpl.match.id = rpl.ticket.match_id join rpl.team t1 on t1.id = rpl.match.team_home_id join rpl.team t2 on t2.id = rpl.match.team_guest_id where rpl.ticket.id in %s"
+                placeIdsTuple = tuple(placesIds)
+                cursor.execute(query, [placeIdsTuple])
+                rows = cursor.fetchall()
+                selectedPlacesData = [
+                    {'teamHome': row[0], 'teamGuest': row[1], 'id': row[2], 'sector': row[3], 'row': row[4],
+                     'place': row[5]} for row in rows]
+
+            return JsonResponse({'selectedPlaces': selectedPlacesData})
 
         except json.JSONDecodeError:
             print("error")
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-
-        return JsonResponse({'message': 'Data received successfully'})
-
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+def delete_ticket(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            try:
+                # Получите данные из запроса
+                data = json.loads(request.body)
+                ticket_id = data.get('ticketId', int)
+                ticket_to_delete = TicketSales.objects.get(ticket_id=ticket_id)
+                ticket_to_delete.delete()
+
+                return JsonResponse({"message": "Билет успешно удален."})
+            except Exception as e:
+                return JsonResponse({"error": str(e)}, status=500)
+        else:
+            return JsonResponse({"error": "Метод не разрешен."}, status=405)
+
+
+def confirmBuy(request):
+    if request.user.is_authenticated:
+        user_email = request.user.email
+        TicketSales.objects.filter(fan_id=user_email, is_in_basket=True).update(is_in_basket=False)
+        return HttpResponse("Подтверждение покупки успешно выполнено")
+
+
+@login_required
+def my_tickets(request):
+    user_id = request.user.email
+    with connection.cursor() as cursor:
+        query = "select t1.name, t2.name, ticket.id, sector, row, place from rpl.ticket join rpl.match on rpl.match.id = rpl.ticket.match_id join rpl.team t1 on t1.id = rpl.match.team_home_id join rpl.team t2 on t2.id = rpl.match.team_guest_id join rpl.ticket_sales on rpl.ticket_sales.ticket_id = ticket.id where is_in_basket = false and rpl.ticket_sales.fan_id = %s and date > NOW()"
+        cursor.execute(query, [user_id])
+        tickets = cursor.fetchall()
+    return render(request, 'main/my_tickets.html', {'tickets': tickets})

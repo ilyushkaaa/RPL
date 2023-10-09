@@ -161,7 +161,7 @@
 }
 
 body {
-    background: palegreen;
+    background: white;
 }
 
 aside {
@@ -245,7 +245,7 @@ aside {
 
 
 .right {
-    flex: 3; /* Правая часть занимает 1/2 ширины экрана */
+    flex: 4; /* Правая часть занимает 1/2 ширины экрана */
 }
 
 .button-cell {
@@ -291,11 +291,12 @@ area {
     background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 /* Содержимое модального окна */
 .modal-content {
-    background-color: #fff;
+    background-color: palegreen;
     padding: 20px;
     height: 100%;
     width: 100%;
@@ -325,6 +326,7 @@ area {
     max-height: 70vh; /* Максимальная высота контейнера (например, 70% высоты экрана) */
     overflow-y: auto; /* Разрешить вертикальную прокрутку при необходимости */
 }
+
 .matrix {
     display: inline-block;
     border: 1px solid #ccc;
@@ -341,13 +343,21 @@ area {
 .place {
     width: 30px; /* Ширина места */
     height: 30px; /* Высота места */
-    background-color: #939190  ; /* Цвет места */
+    background-color: #939190; /* Цвет места */
     margin: 2px; /* Отступ между местами */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.unavailable {
+    /* Стили для недоступных мест */
+    background-color: #E57373; /* Цвет фона для недоступных мест */
+    color: #FFF; /* Цвет текста для недоступных мест */
+    cursor: not-allowed; /* Изменение формы курсора на "недоступный" */
+    padding: 10px;
+    margin: 5px;
+}
 
 
 .selected-place {
@@ -355,10 +365,8 @@ area {
 }
 
 .default-place {
-    background-color: #939190  ;
+    background-color: #939190;
 }
-
-
 
 
 .right-image {
@@ -367,5 +375,100 @@ area {
 }
 
 ul, ol {
-  list-style-type: none;
+    list-style-type: none;
+}
+
+.basket-container {
+    position: relative;
+    width: 300px;
+    text-align: right;
+
+
+}
+
+.basket-items {
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    z-index: 10;
+    background-color: darkseagreen;
+    border-radius: 10px;
+
+}
+
+.hidden {
+    display: none;
+}
+
+.basket-items li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+/* Стили для кнопки */
+.buy-button {
+    display: inline-block;
+    padding: 10px 20px; /* Регулируйте отступы в зависимости от размера кнопки */
+    background-color: #4CAF50; /* Зеленый цвет фона */
+    color: #fff; /* Цвет текста */
+    border: 2px solid #4CAF50; /* Зеленая рамка */
+    border-radius: 5px; /* Скругленные углы */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Плавные переходы при наведении */
+}
+
+/* Стили для наведения на кнопку */
+.buy-button:hover {
+    background-color: #fff; /* Зеленый цвет фона при наведении */
+    color: #4CAF50; /* Зеленый цвет текста при наведении */
+    border-color: #4CAF50; /* Цвет рамки при наведении */;
+}
+
+.buttonDelete {
+    display: inline-block;
+
+    background-color: white; /* Зеленый цвет фона */
+    color: black; /* Цвет текста */
+    border-radius: 5px; /* Скругленные углы */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Плавные переходы при наведении */
+}
+
+
+.buttonDelete:hover {
+    background-color: black;
+    color: white;
+
+}
+
+area.open-modal {
+    outline: 2px solid transparent;
+    transition: outline-color 0.3s ease;
+}
+
+area.open-modal:hover {
+    outline-color: red;
+    outline-width: 10px;
+}
+
+
+.ticket-items {
+
+    text-align: center;
+
+
+}
+
+.ticket-items li {
+    border: 4px solid #ccc;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    width: 50%;
 }

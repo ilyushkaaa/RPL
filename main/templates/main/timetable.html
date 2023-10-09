@@ -1,5 +1,8 @@
 {% extends 'main/layout.html' %}
+{% load static %}
+
 {% block content %}
+
 
     <table class=search>
     <tr>
@@ -35,7 +38,7 @@
                 <td> {{ fut.0 }} - {{ fut.1 }}</td>
                 <td>{{ fut.2|date:"d.m.Y" }}</td>
                 <td class="button-cell">
-                    <a href="{% url 'buy_tickets' fut.3 %}" class="btn btn-primary">Купить билет</a>
+                    <a href="{% url 'buy_tickets' fut.3 %}" class="buy-button">Купить билет</a>
                 </td>
 
             </tr>

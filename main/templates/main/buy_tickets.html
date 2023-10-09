@@ -1,5 +1,6 @@
 {% extends 'main/layout.html' %}
 {% load static %}
+
 {% block content %}
 
 
@@ -19,6 +20,9 @@
 
         </table>
         <table class="table_result">
+             <tr>
+                 <td>{{ match_info.0.14|date:"d.m.Y" }}</td>
+            </tr>
             <tr>
                 <td>Судья: <a
                         href="{% url 'referee_detail' match_info.0.11 %}">{{ match_info.0.12 }} {{ match_info.0.13 }} </a>
@@ -74,7 +78,7 @@
             <p id="modalText"></p>
             <div class="modal-scrollable-content">
                 <div id="placesMatrix"></div>
-                    <button id="buyButton">Добавить в корзину</button>
+                    <button class = "buy-button" id="buyButton">Добавить в корзину</button>
 
 
             </div>

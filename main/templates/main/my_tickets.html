@@ -1,0 +1,28 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block content %}
+    <h3>Мои билеты</h3>
+    {% for ticket in tickets %}
+
+        <div class="ticket-items">
+            <div class="ticket-items">
+                <ul >
+                    <li id="{{ ticket.2 }}">
+                        {{ ticket.0 }} - {{ ticket.1 }}<br>
+                        Сектор: {{ ticket.3 }}, Ряд: {{ ticket.4 }}, Место: {{ ticket.5 }}
+
+                    </li>
+                </ul>
+
+
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+
+{% endblock %}
+{% block title %}
+    Мои билеты
+{% endblock %}

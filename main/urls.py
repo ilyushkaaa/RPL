@@ -44,5 +44,8 @@ urlpatterns = [
     path('get_places/', views.get_places, name='get_places'),
     path('check_authentication/', views.check_authentication, name='check_authentication'),
     path('process_selected_places/', views.process_selected_places, name='process_selected_places'),
+    path('delete_ticket/', views.delete_ticket, name='delete_ticket'),
+    path('confirmBuy/', views.confirmBuy, name='confirmBuy'),
+    path('my_tickets/', views.my_tickets, name='my_tickets'),
 
 ]

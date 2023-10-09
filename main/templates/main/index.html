@@ -1,15 +1,15 @@
 {% extends 'main/layout.html' %}
+{% load static %}
 {% block content %}
     <div class="emblems">
         {% for team in teams %}
-             <div class="emblem_item">
-                 <a href="{% url 'team_detail' team.id %}">
+            <div class="emblem_item">
+                <a href="{% url 'team_detail' team.id %}">
                     <img src="{{ team.emblem_path }}" alt="{{ team.name }} logo" width="200" height="200">
-                 </a>
+                </a>
             </div>
         {% endfor %}
-     </div>
-
+    </div>
 
 {% endblock %}
 {% block title %}

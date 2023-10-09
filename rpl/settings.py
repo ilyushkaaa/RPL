@@ -68,7 +68,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.user_info'
+                'main.context_processors.my_context_processor',
+                'main.context_processors.show_tickets_in_basket',
+
+
             ],
         },
 

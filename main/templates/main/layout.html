@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
     <script src="{% static 'main/js/modal.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
         a {
             text-decoration: none; /* Цвет ссылок */
@@ -23,17 +25,39 @@
 <aside>
 
     {% if user.is_authenticated %}
-        <div id="cart-icon" class="right-image">
 
-            <span id="cart-count">0</span>
+
+        <div class="basket-container">
+
+            <div id="cart-icon">
+
+                <span id="cart-count">{{ number }}</span>
+            </div>
+            <img src="{% static 'main/img/basket.png' %}" alt="Корзина" width=40px height=40px>
+
+
+            <div class="basket-items hidden">
+                <ul class="">
+                    {% for ticket in tickets_in_basket %}
+
+                        <li id="{{ ticket.2 }}">
+                            {{ ticket.0 }} - {{ ticket.1 }}<br>
+                            Сектор: {{ ticket.3 }}, Ряд: {{ ticket.4 }}, Место: {{ ticket.5 }}
+                            <button class="buttonDelete" data-id="{{ ticket.2 }}">Удалить</button>
+
+                        </li>
+
+
+
+                    {% endfor %}
+                </ul>
+                <button class="buy-button" id="confirmBuy">Купить</button>
+
+
+            </div>
+
+
         </div>
-        <ul>
-            <li>
-                <img src="{% static 'main/img/basket.png' %}" alt="Корзина" width=40px height=40px class="right-image">
-
-            </li>
-
-        </ul>
 
 
     {% endif %}
@@ -83,6 +107,10 @@
             <a class="menu_items" href="{% url 'favourite_team' user.email %}">
                 <li>Моя команда</li>
             </a>
+             <a class="menu_items" href="{% url 'my_tickets' %}">
+                <li>Мои билеты</li>
+            </a>
+
         {% endif %}
 
 

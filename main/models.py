@@ -219,6 +219,11 @@ class TicketSales(models.Model):
     id = models.BigIntegerField(primary_key=True)
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     fan = models.ForeignKey(Fan, on_delete=models.CASCADE)
+    is_in_basket = models.BooleanField()
+
+    @staticmethod
+    def get_items_in_basket_count(user_email):
+        return TicketSales.objects.filter(fan_id=user_email, is_in_basket=True).count()
 
     def __str__(self):
         return str(self.id)

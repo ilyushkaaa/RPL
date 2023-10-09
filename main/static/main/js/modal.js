@@ -1,5 +1,7 @@
 let selectedPlaceIds = new Set();
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM is ready.");
+
     const openModalLinks = document.querySelectorAll(".open-modal");
     const closeModalBtn = document.getElementById("close-modal");
     const modal = document.getElementById("modal");
@@ -7,6 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const matchIdInput = document.getElementById('matchId');
     const buyButton = document.getElementById('buyButton');
     const cartCountElement = document.getElementById('cart-count');
+    const deleteButtons = document.querySelectorAll(".buttonDelete");
+    const confirmBuy = document.getElementById('confirmBuy');
+
+
+// Обновите содержимое элемента <span> с использованием полученного значения
+
+
+    $(".basket-container").on('click', function (e) {
+        e.preventDefault();
+        $('.basket-items').toggleClass('hidden')
+    })
 
 
     openModalLinks.forEach((openModalLink) => {
@@ -26,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             .then(data => {
                                 const placesData = data.places;
 
-                                const rowCount = 5; // Например, 2 ряда
-                                const placesPerRow = 10; // Например, 3 места в каждом ряду
+                                const rowCount = 5;
+                                const placesPerRow = 10;
 
                                 const placesMatrix = document.getElementById('placesMatrix');
                                 let html = '';
@@ -37,9 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
                                     for (let place = 1; place <= placesPerRow; place++) {
                                         const curPlace = placesData.find(placeData => placeData.row === row && placeData.place === place);
                                         if (curPlace) {
-
-                                            html += `<div class="place" data-place-id="${curPlace.placeId}">${curPlace.place}</div>`;
+                                            if (curPlace.is_not_available) {
+                                                // Если is_not_available === true, делаем объект недоступным и меняем цвет
+                                                html += `<button class="place unavailable" data-place-id="${curPlace.placeId}" disabled>${curPlace.place}</button>`;
+                                            } else {
+                                                // Иначе, объект доступен и имеет другой цвет
+                                                html += `<button class="place" data-place-id="${curPlace.placeId}">${curPlace.place}</button>`;
+                                            }
                                         } else {
+                                            // Если объект не найден, отображаем "-"
                                             html += `<div class="place">-</div>`;
                                         }
                                     }
@@ -96,15 +115,49 @@ document.addEventListener("DOMContentLoaded", function () {
         return null;
     }
 
+    confirmBuy.addEventListener('click', function () {
+        const csrfToken = getCSRFToken(); // Получаем CSRF-токен из cookie
+        if (!csrfToken) {
+            console.error('CSRF token not found.');
+            return;
+        }
+        fetch(`/confirmBuy/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrfToken,
+                "Content-Type": "application/json",
+            },
+        })
+            .then(response => {
+                    if (response.ok) {
+                        const basketItems = document.querySelectorAll('.basket-items li');
+                        basketItems.forEach(item => {
+                            item.remove();
+                        });
+                        let newNum = 0;
+
+                        cartCountElement.textContent = newNum.toString()
+                    } else {
+                        console.error("Произошла ошибка при подтверждении покупки.");
+                    }
+                }
+            )
+            .catch(error => {
+                console.error("Произошла ошибка при удалении билета: ", error);
+            });
+    })
+
 
     buyButton.addEventListener('click', () => {
-        const csrfToken = getCSRFToken(); // Получаем CSRF-токен из cookie
+        const csrfToken = getCSRFToken();
         if (!csrfToken) {
             console.error('CSRF token not found.');
             return;
         }
 
         console.log("ededededededede")
+
+
         fetch('/process_selected_places/', {
             method: 'POST',
             headers: {
@@ -115,7 +168,22 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.json())
             .then(data => {
-                // Обработка ответа от сервера
+                const selectedPlaces = data.selectedPlaces;
+
+                selectedPlaces.forEach(currentPlace => {
+                    const listItem = `
+        <li id = "${currentPlace.id}">
+            ${currentPlace.teamHome} - ${currentPlace.teamGuest}<br>
+            Сектор: ${currentPlace.sector}, Ряд: ${currentPlace.row}, Место: ${currentPlace.place}
+            <button class="buttonDelete">Удалить</button>
+
+        </li>
+    `;
+
+                    $('.basket-items ul').append(listItem);
+                });
+
+
             })
             .catch(error => {
                 console.error('Ошибка при отправке данных на сервер:', error);
@@ -125,6 +193,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
         cartCountElement.textContent = newNum.toString()
 
+
+    });
+
+
+    deleteButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            console.log("delete")
+            const csrfToken = getCSRFToken(); // Получаем CSRF-токен из cookie
+            if (!csrfToken) {
+                console.error('CSRF token not found.');
+                return;
+            }
+
+            const ticketId = this.getAttribute("data-id");
+
+            // Отправить AJAX-POST-запрос на сервер для удаления билета
+            fetch(`/delete_ticket/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ticketId: ticketId}),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        const listItem = document.getElementById(ticketId);
+                        if (listItem) {
+                            listItem.remove();
+                        }
+                    } else {
+                        console.error("Произошла ошибка при удалении билета.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Произошла ошибка при удалении билета: ", error);
+                });
+            let newNum = parseInt(cartCountElement.textContent) - 1;
+
+            cartCountElement.textContent = newNum.toString()
+        });
     });
 });
 
