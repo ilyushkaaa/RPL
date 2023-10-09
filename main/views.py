@@ -480,3 +480,19 @@ def my_tickets(request):
         cursor.execute(query, [user_id])
         tickets = cursor.fetchall()
     return render(request, 'main/my_tickets.html', {'tickets': tickets})
+
+
+@user_passes_test(is_superuser)
+def statistics(request):
+    with connection.cursor() as cursor:
+        query = "select * from rpl.home_attendance_view"
+        cursor.execute(query)
+        home_attendance = cursor.fetchall()
+    with connection.cursor() as cursor1:
+        query = "select * from rpl.match_attendance_view"
+        cursor1.execute(query)
+        match_attendance = cursor1.fetchall()
+
+    return render(request, 'main/statistics.html', {'home_attendance': home_attendance,
+                                                    'match_attendance': match_attendance})
+

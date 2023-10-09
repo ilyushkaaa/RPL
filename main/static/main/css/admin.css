@@ -7,7 +7,7 @@ aside{
     min-height: 2500px;
     color: black;
     border-right: 5px solid gray;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .forma{
@@ -28,3 +28,42 @@ aside{
   text-align: center;
   margin-bottom: 5px; /* Добавьте отступы между кнопками, если необходимо */
 }
+
+
+
+/* Стили для разделения экрана на две части */
+.container {
+    display: flex;
+}
+
+.left {
+    flex: 4; /* Левая часть занимает 1/2 ширины экрана */
+}
+
+
+.right {
+    flex: 6; /* Правая часть занимает 1/2 ширины экрана */
+}
+
+.bombardirs {
+    border-collapse: collapse;
+    width: 98%;
+    font-family: Arial, sans-serif;
+
+}
+
+
+.bombardirs th,
+.bombardirs td {
+    padding: 10px;
+    text-align: left;
+}
+
+.bombardirs tr {
+    border-bottom: 3px solid #ccc
+}
+
+.bombardirs th {
+    background-color: deepskyblue;
+}
+

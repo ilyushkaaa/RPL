@@ -47,5 +47,6 @@ urlpatterns = [
     path('delete_ticket/', views.delete_ticket, name='delete_ticket'),
     path('confirmBuy/', views.confirmBuy, name='confirmBuy'),
     path('my_tickets/', views.my_tickets, name='my_tickets'),
+    path('statistics/', views.statistics, name='statistics'),
 
 ]

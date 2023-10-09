@@ -1,0 +1,60 @@
+{% extends 'main/admin_layout.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="left">
+            <h5>Общая посещаемость домашних матчей по командам</h5>
+            <table class=bombardirs>
+                <thead>
+                <tr>
+                    <th>Команда</th>
+                    <th>Общая посещаемость</th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for h_a in home_attendance %}
+                    <tr>
+                        <td>{{ h_a.0 }}</td>
+                        <td>{{ h_a.1 }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="right">
+            <h5>Посещаемость по матчам</h5>
+            <table class=bombardirs>
+                <thead>
+                <tr>
+                    <th>Домашняя команда</th>
+                    <th>Гостевая команда</th>
+                    <th>Посещаемость</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for m_a in match_attendance %}
+                    <tr>
+                        <td>{{ m_a.0 }}</td>
+                        <td>{{ m_a.2 }}</td>
+                        <td>{{ m_a.4 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+{% block title %}
+    Статистика
+{% endblock %}
